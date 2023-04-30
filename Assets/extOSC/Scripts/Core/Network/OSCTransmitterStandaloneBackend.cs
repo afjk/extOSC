@@ -36,6 +36,7 @@ namespace extOSC.Core.Network
 			try
 			{
 				_client = OSCStandaloneManager.Create(localHost, localPort);
+				_client.EnableBroadcast = true;
 			}
 			catch (SocketException e)
 			{
