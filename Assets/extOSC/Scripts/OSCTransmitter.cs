@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 using System;
 using System.Collections.Generic;
-
+using System.Net;
 using extOSC.Core;
 using extOSC.Core.Network;
 
@@ -163,6 +163,10 @@ namespace extOSC
 		[FormerlySerializedAs("useBundle")]
 		private bool _useBundle;
 
+		
+		[SerializeField]
+		private bool _broadcast = false;
+		
 		private readonly List<IOSCPacket> _bundleBuffer = new List<IOSCPacket>();
 
 		private OSCTransmitterBackend _transmitterBackend => __transmitterBackend ?? (__transmitterBackend = OSCTransmitterBackend.Create());
@@ -218,6 +222,10 @@ namespace extOSC
 		public override void Connect()
 		{
 			_transmitterBackend.Connect(GetLocalHost(), GetLocalPort());
+			if (_broadcast)
+			{
+				_remoteHost = IPAddress.Broadcast.ToString();
+			}
 			_transmitterBackend.RefreshRemote(_remoteHost, _remotePort);
 		}
 
