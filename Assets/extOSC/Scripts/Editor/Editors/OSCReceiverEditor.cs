@@ -34,6 +34,10 @@ namespace extOSC.Editor
 
 		private static readonly GUIContent _drownContent = new GUIContent("Receiver is drown!");
 
+		private static readonly GUIContent _multicastContent = new GUIContent("Multicast");
+
+		private static readonly GUIContent _multicastAddressContent = new GUIContent("Multicast Address:");
+
 		private static string _advancedSettingsText = "\"Advanced settings\" are not available for UWP (WSA).";
 		
 		private static string _drownText = "OSCReceiver is unable to process the current number of packets. Try reducing the number of packetss, or turn off optimizations: \"Tools/extOSC/\".";
@@ -58,6 +62,8 @@ namespace extOSC.Editor
 
 		private SerializedProperty _closeOnPauseProperty;
 
+		private SerializedProperty _multicastProperty;
+		private SerializedProperty _multicastAddressProperty;
 		private OSCReceiver _receiver;
 
 		private string _localHostCache;
@@ -80,6 +86,8 @@ namespace extOSC.Editor
 			_workInEditorProperty = serializedObject.FindProperty("_workInEditor");
 			_mapBundleProperty = serializedObject.FindProperty("_mapBundle");
 			_closeOnPauseProperty = serializedObject.FindProperty("_closeOnPause");
+			_multicastProperty = serializedObject.FindProperty("_multicast");
+			_multicastAddressProperty = serializedObject.FindProperty("_multicastAddress");
 
 			EditorApplication.update += ReceiverEditorUpdate;
 
@@ -179,6 +187,8 @@ namespace extOSC.Editor
 					}
 
 					EditorGUILayout.PropertyField(_localHostModeProperty, _localHostModeContent);
+					EditorGUILayout.PropertyField(_multicastProperty, _multicastContent);
+					EditorGUILayout.PropertyField(_multicastAddressProperty, _multicastAddressContent);
 				}
 
 				// CONTROLS

@@ -40,7 +40,7 @@ namespace extOSC.Core.Network
 
 		#region Public Methods
 
-		public override void Connect(string localHost, int localPort)
+		public override void Connect(string localHost, int localPort, string multicastAddress)
 		{
 			if (_client != null)
 				Close();
@@ -49,6 +49,10 @@ namespace extOSC.Core.Network
 			{
 				_client = OSCStandaloneManager.Create(localHost, localPort);
 
+				if (!string.IsNullOrEmpty(multicastAddress))
+				{
+					_client.JoinMulticastGroup(IPAddress.Parse(multicastAddress));
+				}
 				_controllerThreadAsync = ControllerThread;
 				_client.BeginReceive(_controllerThreadAsync, _client);
 
