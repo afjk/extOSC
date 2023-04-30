@@ -10,6 +10,8 @@ namespace extOSC.Editor
 	{
 		#region Static Private Vars
 
+		private static readonly GUIContent _broadcastContent = new GUIContent("Broadcast");
+
 		private static readonly GUIContent _hostContent = new GUIContent("Remote Host:");
 
 		private static readonly GUIContent _portContent = new GUIContent("Remote Port:");
@@ -50,6 +52,8 @@ namespace extOSC.Editor
 
 		#region Private Vars
 
+		private SerializedProperty _broadcastProperty;
+
 		private SerializedProperty _remoteHostProperty;
 
 		private SerializedProperty _remotePortProperty;
@@ -89,6 +93,7 @@ namespace extOSC.Editor
 			_transmitter = target as OSCTransmitter;
 			_localHostCache = OSCUtilities.GetLocalHost();
 
+			_broadcastProperty = serializedObject.FindProperty("_broadcast");
 			_remoteHostProperty = serializedObject.FindProperty("_remoteHost");
 			_remotePortProperty = serializedObject.FindProperty("_remotePort");
 			_autoConnectProperty = serializedObject.FindProperty("_autoConnect");
@@ -137,6 +142,7 @@ namespace extOSC.Editor
 				EditorGUILayout.LabelField(_transmitterSettingsContent, EditorStyles.boldLabel);
 				using (new GUILayout.VerticalScope(OSCEditorStyles.Box))
 				{
+					EditorGUILayout.PropertyField(_broadcastProperty, _broadcastContent);
 					EditorGUILayout.PropertyField(_remoteHostProperty, _hostContent);
 					EditorGUILayout.PropertyField(_remotePortProperty, _portContent);
 					EditorGUILayout.PropertyField(_mapBundleProperty, _mapBundleContent);
