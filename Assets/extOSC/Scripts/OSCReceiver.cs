@@ -115,6 +115,12 @@ namespace extOSC
 		[FormerlySerializedAs("localPort")]
 		private int _localPort = 7001;
 
+		[SerializeField]
+		private bool _multicast = false;
+
+		[SerializeField]
+		private string _multicastAddress = "239.0.0.1";
+
 		private readonly Queue<IOSCPacket> _packets = new Queue<IOSCPacket>();
 
 		private readonly List<IOSCBind> _messageBindings = new List<IOSCBind>();
@@ -212,7 +218,12 @@ namespace extOSC
 
 		public override void Connect()
 		{
-			_receiverBackend.Connect(GetLocalHost(), _localPort);
+			string multicastAddress = "";
+			if (_multicast)
+			{
+				multicastAddress = _multicastAddress;
+			}
+			_receiverBackend.Connect(GetLocalHost(), _localPort, multicastAddress);
 		}
 
 		public override void Close()
