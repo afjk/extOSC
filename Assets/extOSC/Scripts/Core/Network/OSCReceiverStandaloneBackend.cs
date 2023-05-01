@@ -40,18 +40,24 @@ namespace extOSC.Core.Network
 
 		#region Public Methods
 
+		private static bool _joinMulticastGroup = false;
+		private string _multicastAddress;
+
 		public override void Connect(string localHost, int localPort, string multicastAddress)
 		{
 			if (_client != null)
 				Close();
 
+			_multicastAddress = multicastAddress;
+
 			try
 			{
 				_client = OSCStandaloneManager.Create(localHost, localPort);
 
-				if (!string.IsNullOrEmpty(multicastAddress))
+				if (!_joinMulticastGroup && !string.IsNullOrEmpty(multicastAddress))
 				{
 					_client.JoinMulticastGroup(IPAddress.Parse(multicastAddress));
+					_joinMulticastGroup = true;
 				}
 				_controllerThreadAsync = ControllerThread;
 				_client.BeginReceive(_controllerThreadAsync, _client);
