@@ -58,6 +58,7 @@ namespace extOSC.Core.Network
 				{
 					_client.JoinMulticastGroup(IPAddress.Parse(multicastAddress));
 					_joinMulticastGroup = true;
+					_client.MulticastLoopback = false;
 				}
 				_controllerThreadAsync = ControllerThread;
 				_client.BeginReceive(_controllerThreadAsync, _client);
